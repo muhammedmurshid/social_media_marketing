@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_smm,access_smm,model_social_details,groups_smm_head,1,1,1,1
+access_smm_requirements,access_smm,model_social_requirements,groups_smm_head,1,1,1,1
+smm_agencies,access_smm,model_social_agency,groups_smm_head,1,1,1,1
+access_smm_requirements_user,access_smm,model_social_requirements,group_smm_user,1,1,1,1
+access_smm_requirements_user,access_smm,model_social_campaign_records,,1,1,1,1
+access_smm_wizard,access_smm,model_social_requirements_wizard,,1,1,1,1
+
+

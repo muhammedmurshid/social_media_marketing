@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="logic_smm_requirements_form" model="ir.ui.view">
+        <field name="name">Requirements</field>
+        <field name="model">social.requirements</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Form">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_send_to_approval" string="Sent To Approval" type="object" states="draft"
+                            style="background-color:#f5b342"/>
+                    <button name="action_approve" string="Approve" type="object" states="request_sent"
+                            style="background-color:#70ba38" groups="social_media_marketing.groups_smm_head"/>
+                    <button name="action_reject" string="Reject" type="object" states="request_sent"
+                            style="background-color:#fc4e3a" groups="social_media_marketing.groups_smm_head"/>
+                    <button name="action_running" string="Running" type="object"
+                            states='approved,in_review,stoped' style="background-color:#bf58a7"
+                            groups="social_media_marketing.groups_smm_head"/>
+                    <button name="action_in_review" string="In Review" type="object"
+                            states='running,approved,stoped' style="background-color:#9768b3"
+                            groups="social_media_marketing.groups_smm_head"/>
+                    <button name="action_stop" string="Stop" type="object" states='running,approved,in_review'
+                            style="background-color:#fc4e3a" groups="social_media_marketing.groups_smm_head"/>
+                </header>
+                <sheet>
+                    <div class="oe_title pr-0">
+                        <h1 class="d-flex flex-row justify-content-between">
+                            <field name="title" class="o_task_name text-truncate" placeholder="Title..."
+                                   default_focus="1"/>
+
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="type"/>
+                            <field name="agency_id" options="{'no_create': True}" attrs="{'invisible': [('state', 'in', ['draft'])]}"/>
+                            <field name="course_id" options="{'no_create': True}" attrs="{'invisible': [('type', '!=', 'course_related')]}"/>
+                            <field name="targeted_audience"/>
+                            <field name="expected_no_of_leads"/>
+                        </group>
+                        <group>
+                            <field name="added_by" readonly="True"/>
+                            <field name="no_of_leads" attrs="{'invisible': [('state', '!=', 'stoped')]}"/>
+                            <field name="amount_spent" attrs="{'invisible': [('state', '!=', 'stoped')]}"/>
+                            <field name="duration" attrs="{'invisible': [('state', '!=', 'stoped')]}"
+                                   widget="float_time"/>
+                        </group>
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="requirement_wizard_view" model="ir.ui.view">
+        <field name="name">Requirements</field>
+        <field name="model">social.requirements.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Requirements">
+                <group>
+                    <group class="oe_title">
+                        <field name="no_of_leads"/>
+                        <field name="amount_spent"/>
+                        <field name="duration"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Done" class="oe_highlight" type="object" name='action_add_campaign_result'/>
+                    <button string="Discard" type="object" special='cancel'/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="smm_requirements_list_view" model="ir.ui.view">
+        <field name="name">Requirements List</field>
+        <field name="model">social.requirements</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="type"/>
+                <field name="course_id"/>
+                <field name="targeted_audience"/>
+                <field name="expected_no_of_leads"/>
+                <field name="no_of_leads"/>
+                <field name="amount_spent"/>
+                <field name="state" widget="badge" decoration-danger="state == 'stoped'"
+                       decoration-success="state == 'approved'"/>
+            </tree>
+
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="smm_requirements_action">
+        <field name="name">Requirements</field>
+        <field name="res_model">social.requirements</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="SMM"
+              id="social_media_marketing_menu"
+              action="smm_requirements_action"
+              web_icon="social_media_marketing,static/description/icon.png"
+              sequence="5"/>
+    <menuitem name="Requirements" id="menu_smm_requirements"
+              action="smm_requirements_action"
+              parent="social_media_marketing_menu"
+              sequence="1"/>
+
+
+</odoo>

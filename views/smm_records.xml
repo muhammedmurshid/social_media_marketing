@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="smm_record_form_view" model="ir.ui.view">
+        <field name="name">Social Media</field>
+        <field name="model">social.details</field>
+
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="running,in_review,stoped"/>
+                    <button name="running" class="oe_highlight" string="Run"
+                            type="object" attrs="{'invisible':[('state', '=', 'running')]}"/>
+                    <button name="in_review" class="oe_highlight" string="Review"
+                            type="object" attrs="{'invisible':[('state', '=', 'in_review')]}"/>
+                    <button name="stop" class="oe_highlight" string="Stop"
+                            type="object" attrs="{'invisible':[('state', '=', 'stoped')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title pr-0">
+                        <h1 class="d-flex flex-row justify-content-between">
+                            <field name="title" class="o_task_name text-truncate" placeholder="Title..."
+                                   default_focus="1"/>
+
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+
+                            <field name="budget_type"/>
+                            <field name="type_of_ad"/>
+                            <field name="daily_budget"
+                                   attrs="{'invisible': [('budget_type', '=', 'life_time_budget')]}"/>
+                            <field name="life_time_budget"
+                                   attrs="{'invisible': [('budget_type', '=', 'daily_budget')]}"/>
+                        </group>
+                        <group>
+                            <field name="reach"/>
+                            <field name="promotion_end_date"/>
+                        </group>
+
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"
+                           widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                <!-- Your form fields here -->
+            </form>
+        </field>
+    </record>
+    <record id="smm_record_tree_view" model="ir.ui.view">
+        <field name="name">Social Media Marketing</field>
+        <field name="model">social.details</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title"/>
+                <field name="daily_budget"/>
+                <field name="reach"/>
+                <field name="promotion_end_date"/>
+                <field name="state" widget="badge" decoration-danger="state == 'stoped'"
+                       decoration-info="state == 'running'" decoration-primary="state == 'in_review'"/>
+                <!-- Your form fields here -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="smm_record_action" model="ir.actions.act_window">
+        <field name="name">Social Media</field>
+        <field name="res_model">social.details</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!--    <menuitem name="Marketing" id="menu_view_marketing"-->
+<!--              parent="social_media_marketing_menu"-->
+<!--              sequence="1"/>-->
+</odoo>

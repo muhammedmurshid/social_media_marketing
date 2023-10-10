@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="logic_smm_agencies_form" model="ir.ui.view">
+        <field name="name">Agency</field>
+        <field name="model">social.agency</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Form">
+                <!--                <header>-->
+                <!--                    <field name="state" widget="statusbar"/>-->
+                <!--                    <button name="action_done" string="Done" type="object" states="draft" style="background-color:#f5b342"/>-->
+                <!--                </header>-->
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="contact_number"/>
+                            <field name="contract_from"/>
+                            <field name="contract_to"/>
+                        </group>
+
+                    </group>
+                    <notebook>
+                        <page string="Account Details">
+                            <group>
+                                <group>
+                                    <field name="account_number"/>
+                                    <field name="bank_name"/>
+                                    <field name="ifsc_code"/>
+                                    <field name="bank_branch"/>
+                                    <field name="holder_name"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Campaign History" name="attendance">
+                            <field name="campaign_ids" widget="one2many">
+                                <tree string="Campaign" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field name="course_id"/>
+                                    <field name="targeted_audience"/>
+                                    <field name="expected_no_of_leads"/>
+                                    <field name="no_of_leads"/>
+                                    <field name="amount_spent"/>
+                                    <field name="duration"/>
+                                </tree>
+                            </field>
+                        </page>
+
+
+                        <page string="Payment History">
+                            <group>
+                                <group>
+                                    <field name="budget"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="smm_agency_list_view" model="ir.ui.view">
+        <field name="name">Agency List</field>
+        <field name="model">social.agency</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="contact_number"/>
+
+            </tree>
+
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="smm_agency_action">
+        <field name="name">Agencies</field>
+        <field name="res_model">social.agency</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Agency" id="menu_smm_agency"
+              action="smm_agency_action"
+              parent="social_media_marketing_menu"
+              sequence="2"/>
+
+
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="activity_social_media_marketing" model="mail.activity.type">
+            <field name="name">Social Media Marketing Activity</field>
+            <field name="res_model_id" ref="social_media_marketing.model_social_requirements"/>
+            <field name="delay_count">30</field>
+        </record>
+    </data>
+</odoo>
